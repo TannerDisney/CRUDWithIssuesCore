@@ -16,10 +16,10 @@ namespace CRUDWithIssuesCore.Controllers
             context = dbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Student> products = StudentDb.GetStudents(context);
-            return View();
+            List<Student> students = await StudentDb.GetStudents(context);
+            return View(students);
         }
 
         public IActionResult Create()
@@ -28,11 +28,11 @@ namespace CRUDWithIssuesCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Student p)
+        public async Task<IActionResult> Create(Student p)
         {
             if (ModelState.IsValid)
             {
-                StudentDb.Add(p, context);
+                await StudentDb.AddAsync(p, context);
                 ViewData["Message"] = $"{p.Name} was added!";
                 return View();
             }
@@ -41,10 +41,10 @@ namespace CRUDWithIssuesCore.Controllers
             return View(p);
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             //get the product by id
-            Student p = StudentDb.GetStudent(context, id);
+            Student p = await StudentDb.GetStudent(context, id);
 
             //show it on web page
             return View();
@@ -63,17 +63,17 @@ namespace CRUDWithIssuesCore.Controllers
             return View(p);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Student p = StudentDb.GetStudent(context, id);
+            Student p = await StudentDb.GetStudent(context, id);
             return View(p);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirm(int id)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
             //Get Product from database
-            Student p = StudentDb.GetStudent(context, id);
+            Student p = await StudentDb.GetStudent(context, id);
 
             StudentDb.Delete(context, p);
 
