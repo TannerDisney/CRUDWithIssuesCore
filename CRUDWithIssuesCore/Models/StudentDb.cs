@@ -38,11 +38,12 @@ namespace CRUDWithIssuesCore.Models
             await context.SaveChangesAsync();
         }
 
-        public static async void Update(SchoolContext context, Student p)
+        public static async Task<Student> Update(SchoolContext context, Student p)
         {
             //Mark the object as deleted
             context.Update(p);
             await context.SaveChangesAsync();
+            return p;
         }
     }
 }

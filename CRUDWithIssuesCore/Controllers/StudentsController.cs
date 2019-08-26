@@ -47,17 +47,17 @@ namespace CRUDWithIssuesCore.Controllers
             Student p = await StudentDb.GetStudent(context, id);
 
             //show it on web page
-            return View();
+            return View(p);
         }
 
         [HttpPost]
-        public IActionResult Edit(Student p)
+        public async Task<IActionResult> Edit(Student p)
         {
             if (ModelState.IsValid)
             {
-                StudentDb.Update(context, p);
+                await StudentDb.Update(context, p);
                 ViewData["Message"] = "Product Updated!";
-                return View(p);
+                return RedirectToAction("Index");
             }
             //return view with errors
             return View(p);
