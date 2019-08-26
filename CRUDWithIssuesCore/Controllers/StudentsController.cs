@@ -34,7 +34,7 @@ namespace CRUDWithIssuesCore.Controllers
             {
                 await StudentDb.AddAsync(p, context);
                 ViewData["Message"] = $"{p.Name} was added!";
-                return View();
+                return RedirectToAction("Index");
             }
 
             //Show web page with errors
